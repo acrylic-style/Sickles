@@ -85,7 +85,7 @@ class SicklePlugin : JavaPlugin(), Listener {
                 if (damage >= item.type.maxDurability) return@forEach
                 val d = 4.0 // lower value = less chance to break item
                 if (Math.random() > (item.itemMeta.getEnchantLevel(Enchantment.DURABILITY)/d)) damage += 2
-                block.breakNaturally()
+                block.breakNaturally(ItemStack(Material.DIAMOND_HOE), true)
             }
             if (damage >= item.type.maxDurability) {
                 e.player.spawnParticle(Particle.ITEM_CRACK, e.player.location, 1, item)
