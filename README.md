@@ -1,5 +1,5 @@
 # Sickles
-Sickles on paper server!
+Sickles on grid spigot server! (does not work on paper/spigot, requires grid)
 
 ## Installation
-Install the [paper](https://github.com/acrylic-style/Paper) from [here](https://ci.acrylicstyle.xyz/job/Paper-1.16)
+Install the [Grid](https://github.com/acrylic-style/grid) from [here](https://ci.acrylicstyle.xyz/guestAuth/repository/download/Grid_Build/.lastSuccessful/powergrid.jar)
