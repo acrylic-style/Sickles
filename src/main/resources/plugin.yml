@@ -1,6 +1,4 @@
 name: Sickles
 main: xyz.acrylicstyle.sickles.SicklePlugin
 version: "1.0"
-api-version: "1.13"
-depend:
-  - TomeitoLib
+api-version: "1.20"

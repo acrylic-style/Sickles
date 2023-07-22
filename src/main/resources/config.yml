@@ -1,0 +1,7 @@
+custom-model-data:
+  wood: 1
+  stone: 1
+  iron: 1
+  gold: 1
+  emerald: 2 # uses iron_hoe
+  diamond: 1

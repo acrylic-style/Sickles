@@ -2,42 +2,35 @@ import java.net.URI
 
 plugins {
     java
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.9.0"
 }
 
 group = "xyz.acrylicstyle"
 version = "1.0"
 
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
 repositories {
+    mavenLocal()
     mavenCentral()
-    maven { url = URI("https://repo.acrylicstyle.xyz/") }
+    maven { url = uri("https://repo.azisaba.net/repository/maven-public/") }
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    compileOnly("xyz.acrylicstyle.grid:grid:1.16.1-R0.1-SNAPSHOT")
-    compileOnly("xyz.acrylicstyle:api:0.5.14a")
+    implementation(kotlin("stdlib"))
+    implementation("net.azisaba:kotlin-nms-extension-v1_20_R1:1.0-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT")
 }
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-        kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.freeCompilerArgs = listOf(
-            "-Xjsr305=strict"
-        )
-    }
-
-    withType<JavaCompile>().configureEach {
+    compileJava {
         options.encoding = "utf-8"
     }
 
-    withType<ProcessResources> {
+    processResources {
         filteringCharset = "UTF-8"
         from(sourceSets.main.get().resources.srcDirs) {
-            include("**")
+            include("**/plugin.yml")
 
             val tokenReplacementMap = mapOf(
                 "version" to project.version,
@@ -48,9 +41,12 @@ tasks {
         }
 
         from(projectDir) { include("LICENSE") }
+
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
 
-    withType<Jar> {
+    jar {
         from(configurations.getByName("implementation").apply{ isCanBeResolved = true }.map { if (it.isDirectory) it else zipTree(it) })
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 }
