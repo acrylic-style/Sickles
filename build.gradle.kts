@@ -8,18 +8,16 @@ plugins {
 group = "xyz.acrylicstyle"
 version = "1.0"
 
-java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
 repositories {
     mavenLocal()
     mavenCentral()
-    maven { url = uri("https://repo.azisaba.net/repository/maven-public/") }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("net.azisaba:kotlin-nms-extension-v1_20_R1:1.0-SNAPSHOT")
-    compileOnly("org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot:1.15.2-R0.1-SNAPSHOT")
 }
 
 tasks {

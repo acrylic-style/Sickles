@@ -1,12 +1,8 @@
 package xyz.acrylicstyle.sickles
 
-import net.azisaba.kotlinnmsextension.v1_20_R1.getBoolean
-import net.azisaba.kotlinnmsextension.v1_20_R1.getOrCreateTag
-import net.azisaba.kotlinnmsextension.v1_20_R1.set
-import net.azisaba.kotlinnmsextension.v1_20_R1.tag
 import org.bukkit.*
 import org.bukkit.block.Block
-import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -15,6 +11,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.RecipeChoice
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.meta.Damageable
+import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.java.JavaPlugin
 
 class SicklePlugin : JavaPlugin(), Listener {
@@ -23,60 +20,88 @@ class SicklePlugin : JavaPlugin(), Listener {
     override fun onEnable() {
         saveDefaultConfig()
         Bukkit.getPluginManager().registerEvents(this, this)
-        run {
-            val key = NamespacedKey(this, "wooden_sickle")
-            val recipe = ShapedRecipe(key, getSickleItem(Material.WOODEN_HOE, "木の草刈り鎌", config.getInt("custom-model-data.wood", 1)))
-            recipe.shape(" X ", "  X", "YX ")
-            recipe.setIngredient('X', RecipeChoice.MaterialChoice(*Tag.PLANKS.values.toTypedArray()))
-            recipe.setIngredient('Y', Material.STICK)
-            recipes.add(key)
-            Bukkit.addRecipe(recipe)
-        }
-        run {
-            val key = NamespacedKey(this, "stone_sickle")
-            val recipe = ShapedRecipe(key, getSickleItem(Material.STONE_HOE, "石の草刈り鎌", config.getInt("custom-model-data.stone", 1)))
-            recipe.shape(" X ", "  X", "YX ")
-            recipe.setIngredient('X', Material.COBBLESTONE)
-            recipe.setIngredient('Y', Material.STICK)
-            recipes.add(key)
-            Bukkit.addRecipe(recipe)
-        }
-        run {
-            val key = NamespacedKey(this, "iron_sickle")
-            val recipe = ShapedRecipe(key, getSickleItem(Material.IRON_HOE, "鉄の草刈り鎌", config.getInt("custom-model-data.iron", 1)))
-            recipe.shape(" X ", "  X", "YX ")
-            recipe.setIngredient('X', Material.IRON_INGOT)
-            recipe.setIngredient('Y', Material.STICK)
-            recipes.add(key)
-            Bukkit.addRecipe(recipe)
-        }
-        run {
-            val key = NamespacedKey(this, "golden_sickle")
-            val recipe = ShapedRecipe(key, getSickleItem(Material.GOLDEN_HOE, "金の草刈り鎌", config.getInt("custom-model-data.gold", 1)))
-            recipe.shape(" X ", "  X", "YX ")
-            recipe.setIngredient('X', Material.GOLD_INGOT)
-            recipe.setIngredient('Y', Material.STICK)
-            recipes.add(key)
-            Bukkit.addRecipe(recipe)
-        }
-        run {
-            val key = NamespacedKey(this, "emerald_sickle")
-            val recipe = ShapedRecipe(key, getSickleItem(Material.IRON_HOE, "エメラルドの草刈り鎌", config.getInt("custom-model-data.emerald", 2)))
-            recipe.shape(" X ", "  X", "YX ")
-            recipe.setIngredient('X', Material.EMERALD)
-            recipe.setIngredient('Y', Material.STICK)
-            recipes.add(key)
-            Bukkit.addRecipe(recipe)
-        }
-        run {
-            val key = NamespacedKey(this, "diamond_sickle")
-            val recipe = ShapedRecipe(key, getSickleItem(Material.DIAMOND_HOE, "ダイヤの草刈り鎌", config.getInt("custom-model-data.diamond", 1)))
-            recipe.shape(" X ", "  X", "YX ")
-            recipe.setIngredient('X', Material.DIAMOND)
-            recipe.setIngredient('Y', Material.STICK)
-            recipes.add(key)
-            Bukkit.addRecipe(recipe)
-        }
+        try {
+            run {
+                val key = NamespacedKey(this, "wooden_sickle")
+                val recipe = ShapedRecipe(
+                    key,
+                    getSickleItem(Material.WOODEN_HOE, "木の草刈り鎌", config.getInt("custom-model-data.wood", 1))
+                )
+                recipe.shape(" X ", "  X", "YX ")
+                recipe.setIngredient('X', RecipeChoice.MaterialChoice(*Tag.PLANKS.values.toTypedArray()))
+                recipe.setIngredient('Y', Material.STICK)
+                recipes.add(key)
+                Bukkit.addRecipe(recipe)
+            }
+            run {
+                val key = NamespacedKey(this, "stone_sickle")
+                val recipe = ShapedRecipe(
+                    key,
+                    getSickleItem(Material.STONE_HOE, "石の草刈り鎌", config.getInt("custom-model-data.stone", 1))
+                )
+                recipe.shape(" X ", "  X", "YX ")
+                recipe.setIngredient('X', Material.COBBLESTONE)
+                recipe.setIngredient('Y', Material.STICK)
+                recipes.add(key)
+                Bukkit.addRecipe(recipe)
+            }
+            run {
+                val key = NamespacedKey(this, "iron_sickle")
+                val recipe = ShapedRecipe(
+                    key,
+                    getSickleItem(Material.IRON_HOE, "鉄の草刈り鎌", config.getInt("custom-model-data.iron", 1))
+                )
+                recipe.shape(" X ", "  X", "YX ")
+                recipe.setIngredient('X', Material.IRON_INGOT)
+                recipe.setIngredient('Y', Material.STICK)
+                recipes.add(key)
+                Bukkit.addRecipe(recipe)
+            }
+            run {
+                val key = NamespacedKey(this, "golden_sickle")
+                val recipe = ShapedRecipe(
+                    key,
+                    getSickleItem(Material.GOLDEN_HOE, "金の草刈り鎌", config.getInt("custom-model-data.gold", 1))
+                )
+                recipe.shape(" X ", "  X", "YX ")
+                recipe.setIngredient('X', Material.GOLD_INGOT)
+                recipe.setIngredient('Y', Material.STICK)
+                recipes.add(key)
+                Bukkit.addRecipe(recipe)
+            }
+            run {
+                val key = NamespacedKey(this, "emerald_sickle")
+                val recipe = ShapedRecipe(
+                    key,
+                    getSickleItem(
+                        Material.IRON_HOE,
+                        "エメラルドの草刈り鎌",
+                        config.getInt("custom-model-data.emerald", 2)
+                    )
+                )
+                recipe.shape(" X ", "  X", "YX ")
+                recipe.setIngredient('X', Material.EMERALD)
+                recipe.setIngredient('Y', Material.STICK)
+                recipes.add(key)
+                Bukkit.addRecipe(recipe)
+            }
+            run {
+                val key = NamespacedKey(this, "diamond_sickle")
+                val recipe = ShapedRecipe(
+                    key,
+                    getSickleItem(
+                        Material.DIAMOND_HOE,
+                        "ダイヤの草刈り鎌",
+                        config.getInt("custom-model-data.diamond", 1)
+                    )
+                )
+                recipe.shape(" X ", "  X", "YX ")
+                recipe.setIngredient('X', Material.DIAMOND)
+                recipe.setIngredient('Y', Material.STICK)
+                recipes.add(key)
+                Bukkit.addRecipe(recipe)
+            }
+        } catch (_: Exception) {}
     }
 
     override fun onDisable() {
@@ -95,14 +120,14 @@ class SicklePlugin : JavaPlugin(), Listener {
             if (types.contains(e.block.type) && isSickle(item)) {
                 val meta = item.itemMeta as Damageable
                 var damage = meta.damage
-                getNearbyBlocks(e.block.location, 5).forEach { block ->
+                getNearbyBlocks(e.block.location, 10).forEach { block ->
                     if (!types.contains(block.type)) return@forEach
                     if (damage >= item.type.maxDurability) return@forEach
                     val d = 4.0 // lower value = less chance to break item
                     if (!BlockBreakEvent(block, e.player).apply {
                             Bukkit.getPluginManager().callEvent(this)
                         }.isCancelled) {
-                        if (Math.random() > (meta.getEnchantLevel(Enchantment.DURABILITY) / d)) damage += 2
+                        if (Math.random() > ((meta as ItemMeta).getEnchantLevel(Enchantment.DURABILITY) / d)) damage += 2
                         block.breakNaturally(ItemStack(Material.DIAMOND_HOE))
                     }
                 }
@@ -114,7 +139,7 @@ class SicklePlugin : JavaPlugin(), Listener {
                     return
                 }
                 meta.damage = damage
-                item.itemMeta = meta
+                item.itemMeta = meta as ItemMeta
             }
         } finally {
             destroying = false
@@ -132,7 +157,6 @@ class SicklePlugin : JavaPlugin(), Listener {
             types.add(Material.KELP)
             types.add(Material.KELP_PLANT)
             Tag.SAPLINGS.values.forEach { types.add(it) }
-            Tag.SWORD_EFFICIENT.values.forEach { types.add(it) }
             Tag.TALL_FLOWERS.values.forEach { types.add(it) }
             Tag.FLOWERS.values.forEach { types.add(it) }
             Tag.SMALL_FLOWERS.values.forEach { types.add(it) }
@@ -155,8 +179,8 @@ class SicklePlugin : JavaPlugin(), Listener {
         private fun setSickle(item: ItemStack): ItemStack {
             val nms = CraftItemStack.asNMSCopy(item)
             val tag = nms.getOrCreateTag()
-            tag["sickle"] = true
-            tag["sSickle"] = "yes"
+            tag.setBoolean("sickle", true)
+            tag.setString("sSickle", "yes")
             nms.tag = tag
             return CraftItemStack.asBukkitCopy(nms)
         }
