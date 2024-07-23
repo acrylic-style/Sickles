@@ -74,7 +74,7 @@ class SicklePlugin : JavaPlugin(), Listener {
                 val recipe = ShapedRecipe(
                     key,
                     getSickleItem(
-                        Material.IRON_HOE,
+                        Material.DIAMOND_HOE,
                         "エメラルドの草刈り鎌",
                         config.getInt("custom-model-data.emerald", 2)
                     )
