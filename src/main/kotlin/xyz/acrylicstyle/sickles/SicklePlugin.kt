@@ -20,88 +20,130 @@ class SicklePlugin : JavaPlugin(), Listener {
     override fun onEnable() {
         saveDefaultConfig()
         Bukkit.getPluginManager().registerEvents(this, this)
-        try {
-            run {
-                val key = NamespacedKey(this, "wooden_sickle")
-                val recipe = ShapedRecipe(
-                    key,
-                    getSickleItem(Material.WOODEN_HOE, "木の草刈り鎌", config.getInt("custom-model-data.wood", 1))
+        run {
+            val key = NamespacedKey(this, "wooden_sickle")
+            val recipe = ShapedRecipe(
+                key,
+                getSickleItem(Material.WOODEN_HOE, "木の草刈り鎌", config.getInt("custom-model-data.wood", 1))
+            )
+            recipe.shape(" X ", "  X", "YX ")
+            recipe.setIngredient('X', RecipeChoice.MaterialChoice(*Tag.PLANKS.values.toTypedArray()))
+            recipe.setIngredient('Y', Material.STICK)
+            recipes.add(key)
+            Bukkit.addRecipe(recipe)
+        }
+        run {
+            val key = NamespacedKey(this, "stone_sickle")
+            val recipe = ShapedRecipe(
+                key,
+                getSickleItem(Material.STONE_HOE, "石の草刈り鎌", config.getInt("custom-model-data.stone", 1))
+            )
+            recipe.shape(" X ", "  X", "YX ")
+            recipe.setIngredient('X', Material.COBBLESTONE)
+            recipe.setIngredient('Y', Material.STICK)
+            recipes.add(key)
+            Bukkit.addRecipe(recipe)
+        }
+        run {
+            val key = NamespacedKey(this, "iron_sickle")
+            val recipe = ShapedRecipe(
+                key,
+                getSickleItem(Material.IRON_HOE, "鉄の草刈り鎌", config.getInt("custom-model-data.iron", 1))
+            )
+            recipe.shape(" X ", "  X", "YX ")
+            recipe.setIngredient('X', Material.IRON_INGOT)
+            recipe.setIngredient('Y', Material.STICK)
+            recipes.add(key)
+            Bukkit.addRecipe(recipe)
+        }
+        run {
+            val key = NamespacedKey(this, "golden_sickle")
+            val recipe = ShapedRecipe(
+                key,
+                getSickleItem(Material.GOLDEN_HOE, "金の草刈り鎌", config.getInt("custom-model-data.gold", 1))
+            )
+            recipe.shape(" X ", "  X", "YX ")
+            recipe.setIngredient('X', Material.GOLD_INGOT)
+            recipe.setIngredient('Y', Material.STICK)
+            recipes.add(key)
+            Bukkit.addRecipe(recipe)
+        }
+        run {
+            val key = NamespacedKey(this, "diamond_sickle")
+            val recipe = ShapedRecipe(
+                key,
+                getSickleItem(
+                    Material.DIAMOND_HOE,
+                    "ダイヤの草刈り鎌",
+                    config.getInt("custom-model-data.diamond", 1)
                 )
-                recipe.shape(" X ", "  X", "YX ")
-                recipe.setIngredient('X', RecipeChoice.MaterialChoice(*Tag.PLANKS.values.toTypedArray()))
-                recipe.setIngredient('Y', Material.STICK)
-                recipes.add(key)
-                Bukkit.addRecipe(recipe)
-            }
-            run {
-                val key = NamespacedKey(this, "stone_sickle")
-                val recipe = ShapedRecipe(
-                    key,
-                    getSickleItem(Material.STONE_HOE, "石の草刈り鎌", config.getInt("custom-model-data.stone", 1))
-                )
-                recipe.shape(" X ", "  X", "YX ")
-                recipe.setIngredient('X', Material.COBBLESTONE)
-                recipe.setIngredient('Y', Material.STICK)
-                recipes.add(key)
-                Bukkit.addRecipe(recipe)
-            }
-            run {
-                val key = NamespacedKey(this, "iron_sickle")
-                val recipe = ShapedRecipe(
-                    key,
-                    getSickleItem(Material.IRON_HOE, "鉄の草刈り鎌", config.getInt("custom-model-data.iron", 1))
-                )
-                recipe.shape(" X ", "  X", "YX ")
-                recipe.setIngredient('X', Material.IRON_INGOT)
-                recipe.setIngredient('Y', Material.STICK)
-                recipes.add(key)
-                Bukkit.addRecipe(recipe)
-            }
-            run {
-                val key = NamespacedKey(this, "golden_sickle")
-                val recipe = ShapedRecipe(
-                    key,
-                    getSickleItem(Material.GOLDEN_HOE, "金の草刈り鎌", config.getInt("custom-model-data.gold", 1))
-                )
-                recipe.shape(" X ", "  X", "YX ")
-                recipe.setIngredient('X', Material.GOLD_INGOT)
-                recipe.setIngredient('Y', Material.STICK)
-                recipes.add(key)
-                Bukkit.addRecipe(recipe)
-            }
-            run {
-                val key = NamespacedKey(this, "emerald_sickle")
-                val recipe = ShapedRecipe(
-                    key,
-                    getSickleItem(
-                        Material.DIAMOND_HOE,
-                        "エメラルドの草刈り鎌",
-                        config.getInt("custom-model-data.emerald", 2)
-                    )
-                )
-                recipe.shape(" X ", "  X", "YX ")
-                recipe.setIngredient('X', Material.EMERALD)
-                recipe.setIngredient('Y', Material.STICK)
-                recipes.add(key)
-                Bukkit.addRecipe(recipe)
-            }
-            run {
-                val key = NamespacedKey(this, "diamond_sickle")
-                val recipe = ShapedRecipe(
-                    key,
-                    getSickleItem(
-                        Material.DIAMOND_HOE,
-                        "ダイヤの草刈り鎌",
-                        config.getInt("custom-model-data.diamond", 1)
-                    )
-                )
-                recipe.shape(" X ", "  X", "YX ")
-                recipe.setIngredient('X', Material.DIAMOND)
-                recipe.setIngredient('Y', Material.STICK)
-                recipes.add(key)
-                Bukkit.addRecipe(recipe)
-            }
-        } catch (_: Exception) {}
+            )
+            recipe.shape(" X ", "  X", "YX ")
+            recipe.setIngredient('X', Material.DIAMOND)
+            recipe.setIngredient('Y', Material.STICK)
+            recipes.add(key)
+            Bukkit.addRecipe(recipe)
+        }
+        run {
+            val key = NamespacedKey(this, "emerald_sickle")
+            val recipe = ShapedRecipe(
+                key,
+                getSickleItem(
+                    Material.DIAMOND_HOE,
+                    "エメラルドの草刈り鎌",
+                    config.getInt("custom-model-data.emerald", 2)
+                ).apply {
+                    itemMeta = itemMeta?.apply {
+                        addEnchant(Enchantment.DURABILITY, 3, true)
+                    }
+                }
+            )
+            recipe.shape(" X ", "  X", "YX ")
+            recipe.setIngredient('X', Material.EMERALD)
+            recipe.setIngredient('Y', Material.STICK)
+            recipes.add(key)
+            Bukkit.addRecipe(recipe)
+        }
+//        run {
+//            val key = NamespacedKey(this, "diamond_block_sickle")
+//            val recipe = ShapedRecipe(
+//                key,
+//                getSickleItem(
+//                    Material.DIAMOND_HOE,
+//                    "ダイヤブロックの草刈り鎌",
+//                    config.getInt("custom-model-data.diamond", 1)
+//                ).apply {
+//                    itemMeta = itemMeta?.apply {
+//                        addEnchant(Enchantment.DURABILITY, 10, true)
+//                    }
+//                }
+//            )
+//            recipe.shape(" X ", "  X", "YX ")
+//            recipe.setIngredient('X', Material.DIAMOND_BLOCK)
+//            recipe.setIngredient('Y', Material.STICK)
+//            recipes.add(key)
+//            Bukkit.addRecipe(recipe)
+//        }
+//        run {
+//            val key = NamespacedKey(this, "emerald_block_sickle")
+//            val recipe = ShapedRecipe(
+//                key,
+//                getSickleItem(
+//                    Material.DIAMOND_HOE,
+//                    "エメラルドブロックの草刈り鎌",
+//                    config.getInt("custom-model-data.emerald", 1)
+//                ).apply {
+//                    itemMeta = itemMeta?.apply {
+//                        addEnchant(Enchantment.DURABILITY, 30, true)
+//                    }
+//                }
+//            )
+//            recipe.shape(" X ", "  X", "YX ")
+//            recipe.setIngredient('X', Material.EMERALD_BLOCK)
+//            recipe.setIngredient('Y', Material.STICK)
+//            recipes.add(key)
+//            Bukkit.addRecipe(recipe)
+//        }
     }
 
     override fun onDisable() {
