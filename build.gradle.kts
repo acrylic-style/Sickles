@@ -1,5 +1,3 @@
-import java.net.URI
-
 plugins {
     java
     kotlin("jvm") version "1.9.0"

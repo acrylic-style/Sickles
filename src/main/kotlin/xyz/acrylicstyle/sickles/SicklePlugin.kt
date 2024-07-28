@@ -2,7 +2,6 @@ package xyz.acrylicstyle.sickles
 
 import org.bukkit.*
 import org.bukkit.block.Block
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,6 +11,7 @@ import org.bukkit.inventory.RecipeChoice
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.inventory.meta.Damageable
 import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.persistence.PersistentDataType
 import org.bukkit.plugin.java.JavaPlugin
 
 class SicklePlugin : JavaPlugin(), Listener {
@@ -189,6 +189,7 @@ class SicklePlugin : JavaPlugin(), Listener {
     }
 
     companion object {
+        private val sickleKey by lazy { NamespacedKey(getPlugin(SicklePlugin::class.java), "sickle") }
         val types = mutableSetOf<Material>()
 
         init {
@@ -206,8 +207,10 @@ class SicklePlugin : JavaPlugin(), Listener {
             Tag.LEAVES.values.forEach { types.remove(it) }
         }
 
-        fun isSickle(item: ItemStack?): Boolean =
-            item != null && CraftItemStack.asNMSCopy(item).tag?.getBoolean("sickle") == true
+        fun isSickle(item: ItemStack?): Boolean {
+            val itemMeta = item?.itemMeta ?: return false
+            return itemMeta.persistentDataContainer.has(sickleKey, PersistentDataType.INTEGER)
+        }
 
         fun getSickleItem(material: Material, name: String, model: Int): ItemStack {
             val item = setSickle(ItemStack(material))
@@ -218,14 +221,12 @@ class SicklePlugin : JavaPlugin(), Listener {
             return item
         }
 
-        private fun setSickle(item: ItemStack): ItemStack {
-            val nms = CraftItemStack.asNMSCopy(item)
-            val tag = nms.getOrCreateTag()
-            tag.setBoolean("sickle", true)
-            tag.setString("sSickle", "yes")
-            nms.tag = tag
-            return CraftItemStack.asBukkitCopy(nms)
-        }
+        private fun setSickle(item: ItemStack): ItemStack =
+            item.apply {
+                itemMeta = itemMeta?.apply {
+                    persistentDataContainer.set(sickleKey, PersistentDataType.INTEGER, 1)
+                }
+            }
 
         fun getNearbyBlocks(location: Location, radius: Int): MutableList<Block> {
             val blocks = mutableListOf<Block>()
